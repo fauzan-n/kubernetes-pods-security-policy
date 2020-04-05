@@ -1,0 +1,32 @@
+apiVersion: v1
+items:
+- apiVersion: extensions/v1beta1
+  kind: PodSecurityPolicy
+  metadata:
+    annotations:
+      eks.amazonaws.com/component: pod-security-policy
+      kubernetes.io/cluster-service: "true"
+    name: fauzan-psp
+  spec:
+    allowPrivilegeEscalation: false
+    hostPorts:
+    - max: 65535
+      min: 1024
+    privileged: false
+    runAsUser:
+      rule: MustRunAsNonRoot
+    fsGroup:
+      rule: 'MustRunAs'
+      ranges:
+        - min: 1
+          max: 65535
+    seLinux:
+      rule: RunAsAny
+    supplementalGroups:
+      rule: RunAsAny
+    volumes:
+    - '*'
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
